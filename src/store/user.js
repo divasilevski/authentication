@@ -5,16 +5,27 @@ export default {
     user: null
   },
   mutations: {
-    setUser: (state, payload) => {
-      state.user = payload;
-    }
+    setUser: (state, payload) => (state.user = payload)
   },
   actions: {
-    registerUser: async (context, { email, password }) => {
-      const user = await firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password);
-      context.commit("setUser", new User(user.user.uid));
+    registerUser: async ({ commit }, { name, email, password }) => {
+      // Очищаем поле ошибки
+      commit("clearError");
+
+      // Включаем загрузку
+      commit("setLoading", true);
+
+      try {
+        const user = await firebase
+          .auth()
+          .createUserWithEmailAndPassword(email, password);
+        commit("setUser", new User(user.user.uid, name));
+        commit("setLoading", false);
+      } catch (error) {
+        commit("setError", error.message);
+        commit("setLoading", false);
+        throw error;
+      }
     }
   },
   getters: {
@@ -24,7 +35,8 @@ export default {
 };
 
 class User {
-  constructor(id) {
+  constructor(id, name) {
     this.id = id;
+    this.name = name;
   }
 }
