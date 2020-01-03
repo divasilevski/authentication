@@ -1,12 +1,12 @@
 <template>
   <div class="navbar-item">
     <section>
-      <b-input placeholder="User name" v-modele="user_name"></b-input>
-      <b-input placeholder="Email" type="email" v-modele="user_mail"></b-input>
+      <b-input placeholder="User name" v-model="user_name"></b-input>
+      <b-input placeholder="Email" type="email" v-model="user_mail"></b-input>
       <b-input
         placeholder="Password"
         type="password"
-        v-modele="user_password"
+        v-model="user_password"
         password-reveal
       ></b-input>
 
@@ -20,13 +20,17 @@ export default {
   data() {
     return {
       user_name: "",
-      user_password: "",
-      user_mail: ""
+      user_mail: "",
+      user_password: ""
     };
   },
   methods: {
     registrate() {
-      //
+      const user = {
+        email: this.user_mail,
+        password: this.user_password
+      };
+      this.$store.dispatch("registerUser", user);
     }
   }
 };
