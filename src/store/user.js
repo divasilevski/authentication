@@ -14,15 +14,17 @@ export default {
       const user = await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password);
-      context.commit("setUser", user.user.uid);
+      context.commit("setUser", new User(user.user.uid));
     }
   },
   getters: {
-    user(state) {
-      return state.user;
-    },
-    checkUser(state) {
-      return state.user !== null;
-    }
+    user: state => state.user,
+    checkUser: state => state.user !== null
   }
 };
+
+class User {
+  constructor(id) {
+    this.id = id;
+  }
+}
