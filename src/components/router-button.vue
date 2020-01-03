@@ -3,6 +3,10 @@
     <div class="buttons">
       <b-button tag="router-link" to="/" type="is-success">Home</b-button>
       <b-button tag="router-link" to="/user" type="is-success">User</b-button>
+      <b-button tag="router-link" to="/login" type="is-success">Login</b-button>
+      <b-button tag="router-link" to="/sign-up" type="is-success">
+        SignUp
+      </b-button>
     </div>
   </div>
 </template>
