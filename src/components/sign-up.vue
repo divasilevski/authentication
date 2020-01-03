@@ -2,7 +2,6 @@
   <div class="navbar-item">
     <section>
       <!-- Input forms -->
-      <b-input placeholder="User name" v-model="user_name"></b-input>
       <b-input placeholder="Email" type="email" v-model="user_mail"></b-input>
       <b-input
         placeholder="Password"
@@ -33,7 +32,6 @@
 export default {
   data() {
     return {
-      user_name: "",
       user_mail: "",
       user_password: "",
       isTag: false
@@ -42,7 +40,6 @@ export default {
   methods: {
     registrate() {
       const user = {
-        name: this.user_name,
         email: this.user_mail,
         password: this.user_password
       };

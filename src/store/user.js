@@ -8,24 +8,44 @@ export default {
     setUser: (state, payload) => (state.user = payload)
   },
   actions: {
-    registerUser: async ({ commit }, { name, email, password }) => {
-      // Очищаем поле ошибки
+    registerUser: async ({ commit }, { email, password }) => {
       commit("clearError");
-
-      // Включаем загрузку
       commit("setLoading", true);
 
       try {
         const user = await firebase
           .auth()
           .createUserWithEmailAndPassword(email, password);
-        commit("setUser", new User(user.user.uid, name));
+        commit("setUser", new User(user.user.uid));
         commit("setLoading", false);
       } catch (error) {
         commit("setError", error.message);
         commit("setLoading", false);
         throw error;
       }
+    },
+    loginUser: async ({ commit }, { email, password }) => {
+      commit("clearError");
+      commit("setLoading", true);
+
+      try {
+        const user = await firebase
+          .auth()
+          .signInWithEmailAndPassword(email, password);
+        commit("setUser", new User(user.user.uid));
+        commit("setLoading", false);
+      } catch (error) {
+        commit("setError", error.message);
+        commit("setLoading", false);
+        throw error;
+      }
+    },
+    loggedUser: ({ commit }, payload) => {
+      commit("setUser", new User(payload.uid));
+    },
+    logoutUser: ({ commit }) => {
+      firebase.auth().signOut();
+      commit("setUser", null);
     }
   },
   getters: {
@@ -35,8 +55,7 @@ export default {
 };
 
 class User {
-  constructor(id, name) {
+  constructor(id) {
     this.id = id;
-    this.name = name;
   }
 }

@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "../store";
 
 // views
 import Home from "../views/Home.vue";
@@ -18,7 +19,10 @@ const routes = [
   {
     path: "/user",
     name: "user",
-    component: User
+    component: User,
+    beforeEnter(to, from, next) {
+      store.getters.checkUser ? next() : next("/login");
+    }
   },
   {
     path: "/login",

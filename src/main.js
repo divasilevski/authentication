@@ -33,5 +33,11 @@ new Vue({
     };
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
+
+    // Authentication on page reload
+    firebase.auth().onAuthStateChanged(user => {
+      // If user exists
+      if (user) this.$store.dispatch("loggedUser", user);
+    });
   }
 }).$mount("#app");
