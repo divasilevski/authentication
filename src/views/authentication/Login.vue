@@ -1,7 +1,15 @@
 <template>
-  <div class="login">
-    <div class="navbar-item">
-      <h2>Логин</h2>
-    </div>
-  </div>
+  <Login></Login>
 </template>
+
+<script>
+// @ is an alias to /src
+import Login from "@/components/login.vue";
+
+export default {
+  name: "login",
+  components: {
+    Login
+  }
+};
+</script>

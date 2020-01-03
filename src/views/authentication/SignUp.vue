@@ -1,7 +1,15 @@
 <template>
-  <div class="registration">
-    <div class="navbar-item">
-      <h2>Регистрация</h2>
-    </div>
-  </div>
+  <SignUp></SignUp>
 </template>
+
+<script>
+// @ is an alias to /src
+import SignUp from "@/components/sign-up.vue";
+
+export default {
+  name: "sign-up",
+  components: {
+    SignUp
+  }
+};
+</script>
