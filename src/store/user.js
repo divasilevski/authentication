@@ -4,14 +4,17 @@ export default {
   state: {
     user: null
   },
-  mutation: {},
+  mutations: {
+    setUser: (state, payload) => {
+      state.user = payload;
+    }
+  },
   actions: {
     registerUser: async (context, { email, password }) => {
       const user = await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password);
-      // eslint-disable-next-line no-console
-      console.log(user);
+      context.commit("setUser", user.user.uid);
     }
   },
   getters: {
