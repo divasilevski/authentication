@@ -8,15 +8,25 @@ export default {
     setUser: (state, payload) => (state.user = payload)
   },
   actions: {
-    registerUser: async ({ commit }, { email, password }) => {
+    registerUser: async ({ commit }, { name, email, password }) => {
       commit("clearError");
       commit("setLoading", true);
 
       try {
+        // REGISTRATION
         const user = await firebase
           .auth()
           .createUserWithEmailAndPassword(email, password);
-        commit("setUser", new User(user.user.uid));
+
+        // SEND name TO DATABASE
+        await firebase
+          .database()
+          .ref(`user_data/${user.user.uid}`)
+          .push({ name });
+
+        // Create USER
+        commit("setUser", new User(user.user.uid, name));
+
         commit("setLoading", false);
       } catch (error) {
         commit("setError", error.message);
@@ -29,10 +39,21 @@ export default {
       commit("setLoading", true);
 
       try {
+        // LOGIN
         const user = await firebase
           .auth()
           .signInWithEmailAndPassword(email, password);
-        commit("setUser", new User(user.user.uid));
+
+        // LOAD data FROM DATABASE and decryption
+        const data = await firebase
+          .database()
+          .ref(`user_data/${user.user.uid}`)
+          .once("value");
+        const user_data = dataDecryption(data);
+
+        // Create USER
+        commit("setUser", new User(user.user.uid, user_data.name));
+
         commit("setLoading", false);
       } catch (error) {
         commit("setError", error.message);
@@ -40,8 +61,27 @@ export default {
         throw error;
       }
     },
-    loggedUser: ({ commit }, payload) => {
-      commit("setUser", new User(payload.uid));
+    loggedUser: async ({ commit }, payload) => {
+      commit("clearError");
+      commit("setLoading", true);
+
+      try {
+        // LOAD data FROM DATABASE and decryption
+        const data = await firebase
+          .database()
+          .ref(`user_data/${payload.uid}`)
+          .once("value");
+        const user_data = dataDecryption(data);
+
+        // Load USER
+        commit("setUser", new User(payload.uid, user_data.name));
+
+        commit("setLoading", false);
+      } catch (error) {
+        commit("setError", error.message);
+        commit("setLoading", false);
+        throw error;
+      }
     },
     logoutUser: ({ commit }) => {
       firebase.auth().signOut();
@@ -55,7 +95,14 @@ export default {
 };
 
 class User {
-  constructor(id) {
+  constructor(id, name) {
     this.id = id;
+    this.name = name;
   }
+}
+
+function dataDecryption(encrypted_data) {
+  return Object.assign(
+    ...Object.keys(encrypted_data.val()).map(key => encrypted_data.val()[key])
+  );
 }

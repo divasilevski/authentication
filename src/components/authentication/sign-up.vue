@@ -2,6 +2,7 @@
   <div class="navbar-item">
     <section>
       <!-- Input forms -->
+      <b-input placeholder="UserName" v-model="user_name"></b-input>
       <b-input placeholder="Email" type="email" v-model="user_mail"></b-input>
       <b-input
         placeholder="Password"
@@ -32,6 +33,7 @@
 export default {
   data() {
     return {
+      user_name: "",
       user_mail: "",
       user_password: "",
       isTag: false
@@ -40,6 +42,7 @@ export default {
   methods: {
     registrate() {
       const user = {
+        name: this.user_name,
         email: this.user_mail,
         password: this.user_password
       };
@@ -47,7 +50,7 @@ export default {
       this.$store
         .dispatch("registerUser", user)
         .then(() => {
-          this.$router.push("/login");
+          this.$router.push("/user");
         })
         .catch(() => {
           this.isTag = true;

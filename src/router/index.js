@@ -18,11 +18,18 @@ const routes = [
   },
   {
     path: "/user",
-    name: "user",
-    component: User,
+    name: "/user",
+    component: null,
     beforeEnter(to, from, next) {
-      store.getters.checkUser ? next() : next("/login");
+      store.getters.checkUser
+        ? next(`/user/${store.getters.user.name}`)
+        : next("/login");
     }
+  },
+  {
+    path: `/user/:user_name`,
+    name: "user",
+    component: User
   },
   {
     path: "/login",
