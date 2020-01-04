@@ -13,6 +13,7 @@ export default {
       commit("setLoading", true);
 
       try {
+        // ******************************************************
         // REGISTRATION
         const user = await firebase
           .auth()
@@ -27,6 +28,7 @@ export default {
         // Create USER
         commit("setUser", new User(user.user.uid, name));
 
+        // ******************************************************
         commit("setLoading", false);
       } catch (error) {
         commit("setError", error.message);
@@ -39,6 +41,7 @@ export default {
       commit("setLoading", true);
 
       try {
+        // ******************************************************
         // LOGIN
         const user = await firebase
           .auth()
@@ -54,6 +57,7 @@ export default {
         // Create USER
         commit("setUser", new User(user.user.uid, user_data.name));
 
+        // ******************************************************
         commit("setLoading", false);
       } catch (error) {
         commit("setError", error.message);
@@ -66,6 +70,7 @@ export default {
       commit("setLoading", true);
 
       try {
+        // ******************************************************
         // LOAD data FROM DATABASE and decryption
         const data = await firebase
           .database()
@@ -76,6 +81,7 @@ export default {
         // Load USER
         commit("setUser", new User(payload.uid, user_data.name));
 
+        // ******************************************************
         commit("setLoading", false);
       } catch (error) {
         commit("setError", error.message);
@@ -94,6 +100,7 @@ export default {
   }
 };
 
+/** Класс чисто для удобства */
 class User {
   constructor(id, name) {
     this.id = id;
@@ -101,6 +108,7 @@ class User {
   }
 }
 
+/** Достаем данные из ключей */
 function dataDecryption(encrypted_data) {
   return Object.assign(
     ...Object.keys(encrypted_data.val()).map(key => encrypted_data.val()[key])

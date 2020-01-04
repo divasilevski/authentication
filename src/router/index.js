@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "../store";
-import slugify from "slgify";
+import slugify from "slugify";
 
 // views
 import Home from "../views/Home.vue";

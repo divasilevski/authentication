@@ -7,9 +7,6 @@ import loading from "./loading";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: { input_save: "" },
-  mutations: {},
-  actions: {},
   modules: {
     user,
     loading

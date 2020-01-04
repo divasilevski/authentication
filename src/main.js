@@ -38,9 +38,6 @@ new Vue({
     firebase.auth().onAuthStateChanged(user => {
       // If user exists
       if (user) this.$store.dispatch("loggedUser", user);
-
-      // Database reload for user !!!!
-      // this.$store.dispatch("dataLoad", user);
     });
   }
 }).$mount("#app");

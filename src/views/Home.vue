@@ -1,15 +1,5 @@
 <template>
-  <InputSave></InputSave>
+  <div class="navbar-item">
+    <h3>HOME PAGE!</h3>
+  </div>
 </template>
-
-<script>
-// @ is an alias to /src
-import InputSave from "@/components/input-save.vue";
-
-export default {
-  name: "home",
-  components: {
-    InputSave
-  }
-};
-</script>

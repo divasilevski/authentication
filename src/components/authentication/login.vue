@@ -16,11 +16,11 @@
 
     <!-- Tag with error -->
     <b-tag
-      v-if="isTag"
+      v-if="is_tag"
       attached
       closable
       aria-close-label="Close tag"
-      @close="isTag = false"
+      @close="is_tag = false"
       >{{ errorTag }}
     </b-tag>
   </div>
@@ -32,7 +32,7 @@ export default {
     return {
       user_mail: "",
       user_password: "",
-      isTag: false
+      is_tag: false
     };
   },
   methods: {
@@ -48,7 +48,7 @@ export default {
           this.$router.push("/user");
         })
         .catch(() => {
-          this.isTag = true;
+          this.is_tag = true;
         });
     }
   },

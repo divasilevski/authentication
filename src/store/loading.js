@@ -18,3 +18,21 @@ export default {
     error: state => state.error
   }
 };
+
+/** Стандартная обёртка для асинхронных (actions)
+method: async ({ commit }, payload) => {
+  commit("clearError");
+  commit("setLoading", true);
+
+  try {
+    // await methods
+    // other methods
+    
+    commit("setLoading", false);
+  } catch (error) {
+    commit("setError", error.message);
+    commit("setLoading", false);
+    throw error;
+  }
+}
+*/
