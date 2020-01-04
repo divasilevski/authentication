@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "../store";
+import slugify from "slgify";
 
 // views
 import Home from "../views/Home.vue";
@@ -22,7 +23,7 @@ const routes = [
     component: null,
     beforeEnter(to, from, next) {
       store.getters.checkUser
-        ? next(`/user/${store.getters.user.name}`)
+        ? next(`/user/${slugify(store.getters.user.name, { lower: true })}`)
         : next("/login");
     }
   },
