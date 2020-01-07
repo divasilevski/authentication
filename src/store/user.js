@@ -23,7 +23,7 @@ export default {
         await firebase
           .database()
           .ref(`user_data/${user.user.uid}`)
-          .push({ name });
+          .set({ name });
 
         // Create USER
         commit("setUser", new User(user.user.uid, name));
@@ -52,7 +52,8 @@ export default {
           .database()
           .ref(`user_data/${user.user.uid}`)
           .once("value");
-        const user_data = dataDecryption(data);
+
+        const user_data = data.val(); // if method push: dataDecryption(data);
 
         // Create USER
         commit("setUser", new User(user.user.uid, user_data.name));
