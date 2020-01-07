@@ -53,7 +53,7 @@ export default {
           .ref(`user_data/${user.user.uid}`)
           .once("value");
 
-        const user_data = data.val(); // if method push: dataDecryption(data);
+        const user_data = data.val();
 
         // Create USER
         commit("setUser", new User(user.user.uid, user_data.name));
@@ -77,14 +77,28 @@ export default {
           .auth()
           .signInWithPopup(new firebase.auth.GoogleAuthProvider());
 
+        let user_name = "";
+
         // SEND name TO DATABASE
         await firebase
           .database()
           .ref(`user_data/${user.user.uid}`)
-          .set({ name: user.user.displayName });
+          .once("value")
+          .then(data => {
+            // If name already set
+            user_name = data.val().name;
+          })
+          .catch(() => {
+            // If name not set
+            user_name = user.user.displayName;
+            firebase
+              .database()
+              .ref(`user_data/${user.user.uid}`)
+              .set({ name: user.user.displayName });
+          });
 
         // Create USER
-        commit("setUser", new User(user.user.uid, user.user.displayName));
+        commit("setUser", new User(user.user.uid, user_name));
 
         // ******************************************************
         commit("setLoading", false);
@@ -105,7 +119,7 @@ export default {
           .database()
           .ref(`user_data/${payload.uid}`)
           .once("value");
-        const user_data = dataDecryption(data);
+        const user_data = data.val();
 
         // Load USER
         commit("setUser", new User(payload.uid, user_data.name));
@@ -141,8 +155,8 @@ export default {
 
       try {
         // ******************************************************
-        const user = await firebase.auth().currentUser;
-        user.delete();
+        const user = firebase.auth().currentUser;
+        await user.delete();
 
         await firebase
           .database()
@@ -150,6 +164,44 @@ export default {
           .remove();
 
         commit("setUser", null);
+
+        // ******************************************************
+        commit("setLoading", false);
+      } catch (error) {
+        commit("setError", error.message);
+        commit("setLoading", false);
+        throw error;
+      }
+    },
+    changeUserName: async ({ commit, getters }, user_name) => {
+      commit("clearError");
+      commit("setLoading", true);
+
+      try {
+        // ******************************************************
+        await firebase
+          .database()
+          .ref(`user_data/${getters.user.id}`)
+          .update({ name: user_name });
+
+        getters.user.name = user_name;
+
+        // ******************************************************
+        commit("setLoading", false);
+      } catch (error) {
+        commit("setError", error.message);
+        commit("setLoading", false);
+        throw error;
+      }
+    },
+    changePassword: async ({ commit }, new_password) => {
+      commit("clearError");
+      commit("setLoading", true);
+
+      try {
+        // ******************************************************
+        const user = firebase.auth().currentUser;
+        await user.updatePassword(new_password);
 
         // ******************************************************
         commit("setLoading", false);
@@ -172,11 +224,4 @@ class User {
     this.id = id;
     this.name = name;
   }
-}
-
-/** Достаем данные из ключей */
-function dataDecryption(encrypted_data) {
-  return Object.assign(
-    ...Object.keys(encrypted_data.val()).map(key => encrypted_data.val()[key])
-  );
 }
