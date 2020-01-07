@@ -1,33 +1,43 @@
 <template>
-  <div class="navbar-item">
-    <section>
-      <!-- Input forms -->
-      <b-input placeholder="Email" type="email" v-model="user_mail"></b-input>
-      <b-input
-        placeholder="Password"
-        type="password"
-        v-model="user_password"
-        password-reveal
-      ></b-input>
+  <div class="columns is-centered is-variable is-10">
+    <div class="column is-6-tablet is-4-desktop is-4-widescreen is-centered">
+      <div class="columns is-centered">
+        <div class="column is-centered">
+          <!-- 1/3 Horizontal center -->
 
-      <!-- Login button -->
-      <b-button @click="login" :loading="loading" expanded>Login</b-button>
+          <section>
+            <!-- Input forms -->
+            <div class="field">
+             <b-input placeholder="Email" type="email" v-model="user_mail"></b-input>
+            </div>
+            <div class="field">
+              <b-input placeholder="Password" type="password" v-model="user_password" password-reveal></b-input>
+            </div>
+            
+            <!-- Login button -->
+            <div class="field">
+              <b-button @click="login" :loading="loading" expanded>Login</b-button>
+            </div>
 
-      <!-- Google button -->
-      <b-button @click="loginGoogle" :loading="loading" expanded>
-        Through Google
-      </b-button>
-    </section>
+            <!-- Google button -->
+            <div class="field">
+              <b-button @click="loginGoogle" :loading="loading" expanded>Through Google</b-button>
+            </div>
+          </section>
 
-    <!-- Tag with error -->
-    <b-tag
-      v-if="is_tag"
-      attached
-      closable
-      aria-close-label="Close tag"
-      @close="is_tag = false"
-      >{{ errorTag }}
-    </b-tag>
+          <!-- Tag with error -->
+          <b-tag
+            v-if="is_tag"
+            attached
+            closable
+            aria-close-label="Close tag"
+            @close="is_tag = false"
+          >{{ errorTag }}</b-tag>
+
+          <!-- 1/3 Horizontal center -->
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
