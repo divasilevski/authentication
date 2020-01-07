@@ -6,6 +6,9 @@
 
         <!-- Logout button -->
         <b-button @click="logout">Logout</b-button>
+
+        <!-- Delete button -->
+        <b-button @click="deleteUser">Delete account</b-button>
       </section>
     </div>
   </div>
@@ -16,6 +19,10 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("logoutUser");
+      this.$router.push("/login");
+    },
+    deleteUser() {
+      this.$store.dispatch("deleteUser");
       this.$router.push("/login");
     }
   }

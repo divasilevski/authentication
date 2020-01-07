@@ -80,7 +80,7 @@ export default {
         await firebase
           .database()
           .ref(`user_data/${user.user.uid}`)
-          .push({ name: user.user.displayName });
+          .set({ name: user.user.displayName });
 
         // Create USER
         commit("setUser", new User(user.user.uid, user.user.displayName));
@@ -117,9 +117,46 @@ export default {
         throw error;
       }
     },
-    logoutUser: ({ commit }) => {
-      firebase.auth().signOut();
-      commit("setUser", null);
+    logoutUser: async ({ commit }) => {
+      commit("clearError");
+      commit("setLoading", true);
+
+      try {
+        // ******************************************************
+        await firebase.auth().signOut();
+        commit("setUser", null);
+
+        // ******************************************************
+        commit("setLoading", false);
+      } catch (error) {
+        commit("setError", error.message);
+        commit("setLoading", false);
+        throw error;
+      }
+    },
+    deleteUser: async ({ commit, getters }) => {
+      commit("clearError");
+      commit("setLoading", true);
+
+      try {
+        // ******************************************************
+        const user = await firebase.auth().currentUser;
+        user.delete();
+
+        await firebase
+          .database()
+          .ref(`user_data/${getters.user.id}`)
+          .remove();
+
+        commit("setUser", null);
+
+        // ******************************************************
+        commit("setLoading", false);
+      } catch (error) {
+        commit("setError", error.message);
+        commit("setLoading", false);
+        throw error;
+      }
     }
   },
   getters: {
