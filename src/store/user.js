@@ -19,6 +19,9 @@ export default {
           .auth()
           .createUserWithEmailAndPassword(email, password);
 
+        const currentUser = firebase.auth().currentUser;
+        currentUser.sendEmailVerification();
+
         // SEND name TO DATABASE
         await firebase
           .database()
