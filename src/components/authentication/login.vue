@@ -12,6 +12,11 @@
 
       <!-- Login button -->
       <b-button @click="login" :loading="loading" expanded>Login</b-button>
+
+      <!-- Google button -->
+      <b-button @click="loginGoogle" :loading="loading" expanded>
+        Through Google
+      </b-button>
     </section>
 
     <!-- Tag with error -->
@@ -44,6 +49,16 @@ export default {
 
       this.$store
         .dispatch("loginUser", user)
+        .then(() => {
+          this.$router.push("/user");
+        })
+        .catch(() => {
+          this.is_tag = true;
+        });
+    },
+    loginGoogle() {
+      this.$store
+        .dispatch("loginGoogle")
         .then(() => {
           this.$router.push("/user");
         })

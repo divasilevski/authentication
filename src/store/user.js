@@ -65,6 +65,34 @@ export default {
         throw error;
       }
     },
+    loginGoogle: async ({ commit }) => {
+      commit("clearError");
+      commit("setLoading", true);
+
+      try {
+        // ******************************************************
+        // GOOGLE LOGIN
+        const user = await firebase
+          .auth()
+          .signInWithPopup(new firebase.auth.GoogleAuthProvider());
+
+        // SEND name TO DATABASE
+        await firebase
+          .database()
+          .ref(`user_data/${user.user.uid}`)
+          .push({ name: user.user.displayName });
+
+        // Create USER
+        commit("setUser", new User(user.user.uid, user.user.displayName));
+
+        // ******************************************************
+        commit("setLoading", false);
+      } catch (error) {
+        commit("setError", error.message);
+        commit("setLoading", false);
+        throw error;
+      }
+    },
     loggedUser: async ({ commit }, payload) => {
       commit("clearError");
       commit("setLoading", true);
