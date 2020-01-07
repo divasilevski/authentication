@@ -159,9 +159,9 @@ export default {
       try {
         // ******************************************************
         const user = firebase.auth().currentUser;
-        await user.delete();
+        user.delete();
 
-        await firebase
+        firebase
           .database()
           .ref(`user_data/${getters.user.id}`)
           .remove();
