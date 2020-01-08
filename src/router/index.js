@@ -6,7 +6,7 @@ import slugify from "slugify";
 // views
 import Home from "../views/Home.vue";
 import User from "../views/User.vue";
-import Login from "../views/authentication/Login.vue";
+import SignIn from "../views/authentication/SignIn.vue";
 import SignUp from "../views/authentication/SignUp.vue";
 
 Vue.use(VueRouter);
@@ -24,7 +24,7 @@ const routes = [
     beforeEnter(to, from, next) {
       store.getters.checkUser
         ? next(`/user/${slugify(store.getters.user.name, { lower: true })}`)
-        : next("/login");
+        : next("/sign-in");
     }
   },
   {
@@ -33,9 +33,9 @@ const routes = [
     component: User
   },
   {
-    path: "/login",
-    name: "login",
-    component: Login
+    path: "/sign-in",
+    name: "sign-in",
+    component: SignIn
   },
   {
     path: "/sign-up",

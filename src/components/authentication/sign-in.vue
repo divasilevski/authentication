@@ -7,19 +7,9 @@
 
           <section>
             <h1 class="title is-1 has-text-centered">
-              Create new <br />
+              Login to <br />
               account
             </h1>
-
-            <!-- USERNAME -->
-            <b-field>
-              <p class="control has-icons-left">
-                <b-input placeholder="Username" v-model="user_name"></b-input>
-                <span class="icon is-small is-left">
-                  <i class="fa fa-user" aria-hidden="true"></i>
-                </span>
-              </p>
-            </b-field>
 
             <!-- EMAIL ADRESS -->
             <b-field>
@@ -40,27 +30,12 @@
               <p class="control has-icons-left">
                 <b-input
                   type="password"
-                  placeholder="Create password"
+                  placeholder="Password"
                   v-model="user_password"
                   password-reveal
                 ></b-input>
                 <span class="icon is-small is-left">
-                  <i class="fas fa-lock"></i>
-                </span>
-              </p>
-            </b-field>
-
-            <!-- CONFIRM PASSWORD -->
-            <b-field>
-              <p class="control has-icons-left">
-                <b-input
-                  type="password"
-                  placeholder="Confirm password"
-                  v-model="confirm_password"
-                  password-reveal
-                ></b-input>
-                <span class="icon is-small is-left">
-                  <i class="fa fa-key" aria-hidden="true"></i>
+                  <i class="fa fa-key"></i>
                 </span>
               </p>
             </b-field>
@@ -69,11 +44,11 @@
             <div class="field">
               <b-button
                 type="is-dark"
-                @click="registrate"
+                @click="login"
                 :loading="loading"
                 expanded
               >
-                Sign Up
+                Sign In
               </b-button>
             </div>
 
@@ -84,7 +59,12 @@
 
             <!-- GOOGLE -->
             <div class="field">
-              <b-button icon-left="fab fa-google" icon-pack="fab" expanded>
+              <b-button
+                @click="loginGoogle"
+                icon-left="fab fa-google"
+                icon-pack="fab"
+                expanded
+              >
                 Sign In using Google
               </b-button>
             </div>
@@ -95,6 +75,33 @@
                 Sign In using GitHub
               </b-button>
             </div>
+
+            <!-- --------------------------SEPARATOR-------------------------- -->
+            <div class="field has-text-centered">
+              <span style="color: #D6D6D6">———————— or ————————</span>
+            </div>
+
+            <!-- CREATE ACCOUNT -->
+            <b-button
+              tag="router-link"
+              size="is-small"
+              to="/sign-up"
+              type="is-text"
+              expanded
+            >
+              Don't have an account? Sign Up!
+            </b-button>
+
+            <!-- FORGOT PASSWORD -->
+            <b-button
+              tag="router-link"
+              size="is-small"
+              to="/sign-up"
+              type="is-text"
+              expanded
+            >
+              Forgot your password?
+            </b-button>
           </section>
 
           <!-- 1/3 Horizontal center -->
@@ -108,22 +115,35 @@
 export default {
   data() {
     return {
-      user_name: "",
       user_mail: "",
       user_password: "",
-      isTag: false
+      is_tag: false
     };
   },
   methods: {
-    registrate() {
+    login() {
       const user = {
-        name: this.user_name,
         email: this.user_mail,
         password: this.user_password
       };
 
       this.$store
-        .dispatch("registerUser", user)
+        .dispatch("loginUser", user)
+        .then(() => {
+          this.$router.push("/user");
+        })
+        .catch(error => {
+          this.$buefy.toast.open({
+            message: error,
+            duration: 5000,
+            position: "is-bottom",
+            type: "is-dark"
+          });
+        });
+    },
+    loginGoogle() {
+      this.$store
+        .dispatch("loginGoogle")
         .then(() => {
           this.$router.push("/user");
         })
