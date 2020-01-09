@@ -4,17 +4,17 @@ import store from "../store";
 import slugify from "slugify";
 
 // views
-import Home from "../views/Home.vue";
-import User from "../views/User.vue";
-import SignIn from "../views/authentication/SignIn.vue";
-import SignUp from "../views/authentication/SignUp.vue";
+import Home from "../views/home.vue";
+import User from "../views/user.vue";
+import SignIn from "../views/auth/sign-in.vue";
+import SignUp from "../views/auth/sign-up.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "home",
+    name: "",
     component: Home
   },
   {
@@ -39,7 +39,7 @@ const routes = [
   },
   {
     path: "/sign-up",
-    name: "signup",
+    name: "sign-up",
     component: SignUp
   }
 ];

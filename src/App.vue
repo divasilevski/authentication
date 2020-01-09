@@ -7,7 +7,7 @@
 
 <script>
 // @ is an alias to /src
-import RouterButton from "@/components/router-button.vue";
+import RouterButton from "@/components/nav.vue";
 
 export default {
   name: "app",

@@ -54,11 +54,11 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("logoutUser").then();
-      this.$router.push("/login");
+      this.$router.push("/sign-in");
     },
     deleteUser() {
       this.$store.dispatch("deleteUser");
-      this.$router.push("/login");
+      this.$router.push("/sign-up");
     },
     changeUserName() {
       this.$store.dispatch("changeUserName", this.user_name).then(() => {
