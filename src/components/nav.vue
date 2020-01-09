@@ -14,7 +14,7 @@ export default {
       this.$router.push("/");
     },
     user() {
-      this.$router.push("/sign-in");
+      this.$router.push("/user");
     }
   }
 };

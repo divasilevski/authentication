@@ -82,19 +82,16 @@
               <span style="color: #D6D6D6">———————— or ————————</span>
             </div>
 
-            <!-- GOOGLE -->
-            <div class="field">
-              <b-button icon-left="fab fa-google" icon-pack="fab" expanded>
-                Sign In using Google
-              </b-button>
-            </div>
-
-            <!-- GITHUB -->
-            <div class="field">
-              <b-button icon-left="fab fa-github" icon-pack="fab" expanded>
-                Sign In using GitHub
-              </b-button>
-            </div>
+            <!-- CREATE ACCOUNT -->
+            <b-button
+              tag="router-link"
+              size="is-small"
+              to="/sign-in"
+              type="is-text"
+              expanded
+            >
+              Have an account? Sign In!
+            </b-button>
           </section>
 
           <!-- 1/3 Horizontal center -->

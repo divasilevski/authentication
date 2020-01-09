@@ -20,7 +20,6 @@ const routes = [
   {
     path: "/user",
     name: "/user",
-    component: null,
     beforeEnter(to, from, next) {
       store.getters.checkUser
         ? next(`/user/${slugify(store.getters.user.name, { lower: true })}`)
