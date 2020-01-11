@@ -1,22 +1,32 @@
+// VUE BLOCK
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
-import { ValidationProvider } from "vee-validate";
-
-Vue.component("ValidationProvider", ValidationProvider);
-
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/database";
-import "firebase/messaging";
-import "firebase/storage";
-
+// BUEFY BLOCK
 import Buefy from "buefy";
 import "buefy/dist/buefy.css";
 Vue.use(Buefy);
 
+// VALIDATION BLOCK
+import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
+import { required, email } from "vee-validate/dist/rules";
+
+Vue.component("ValidationProvider", ValidationProvider);
+Vue.component("ValidationObserver", ValidationObserver);
+
+extend("required", required);
+extend("email", email);
+
+// FIREBASE BLOCK
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
+//import "firebase/messaging";
+//import "firebase/storage";
+
+// CREATE VUE
 Vue.config.productionTip = false;
 
 new Vue({
