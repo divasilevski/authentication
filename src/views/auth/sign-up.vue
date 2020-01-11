@@ -7,91 +7,77 @@
 
           <section>
             <h1 class="title is-1 has-text-centered">
-              Create new <br />
-              account
+              Create new
+              <br />account
             </h1>
 
-            <!-- USERNAME -->
-            <b-field>
-              <p class="control has-icons-left">
-                <b-input placeholder="Username" v-model="user_name"></b-input>
-                <span class="icon is-small is-left">
-                  <i class="fa fa-user" aria-hidden="true"></i>
-                </span>
-              </p>
-            </b-field>
+            <ValidationObserver ref="observer">
+              <!-- USERNAME -->
+              <InputValidation
+                rules="required"
+                type="text"
+                placeholder="Username"
+                v-model="user_name"
+                icon="fa fa-user"
+              />
 
-            <!-- EMAIL ADRESS -->
-            <b-field>
-              <p class="control has-icons-left">
-                <b-input
-                  placeholder="Email address"
-                  type="email"
-                  v-model="user_mail"
-                ></b-input>
-                <span class="icon is-small is-left">
-                  <i class="fas fa-envelope"></i>
-                </span>
-              </p>
-            </b-field>
+              <!-- EMAIL ADRESS -->
+              <InputValidation
+                rules="required|email"
+                type="email"
+                placeholder="Email address"
+                v-model="user_mail"
+                icon="fas fa-envelope"
+              />
 
-            <!-- PASSWORD -->
-            <b-field>
-              <p class="control has-icons-left">
-                <b-input
-                  type="password"
-                  placeholder="Create password"
-                  v-model="user_password"
-                  password-reveal
-                ></b-input>
-                <span class="icon is-small is-left">
-                  <i class="fas fa-lock"></i>
-                </span>
-              </p>
-            </b-field>
+              <!-- PASSWORD -->
+              <InputValidation
+                rules="required"
+                type="password"
+                vid="password"
+                placeholder="Create password"
+                v-model="user_password"
+                icon="fas fa-lock"
+                password-reveal
+              />
 
-            <!-- CONFIRM PASSWORD -->
-            <b-field>
-              <p class="control has-icons-left">
-                <b-input
-                  type="password"
-                  placeholder="Confirm password"
-                  v-model="confirm_password"
-                  password-reveal
-                ></b-input>
-                <span class="icon is-small is-left">
-                  <i class="fa fa-key" aria-hidden="true"></i>
-                </span>
-              </p>
-            </b-field>
+              <!-- CONFIRM PASSWORD -->
+              <InputValidation
+                rules="required|confirmed:password"
+                type="password"
+                placeholder="Confirm password"
+                v-model="confirm_password"
+                icon="fa fa-key"
+                password-reveal
+              />
 
-            <!-- REGGISTRATE BUTTON -->
-            <div class="field">
+              <!-- REGGISTRATE BUTTON -->
+              <div class="field">
+                <b-button
+                  type="is-dark"
+                  @click="registrate"
+                  :loading="loading"
+                  expanded
+                  >Sign Up</b-button
+                >
+              </div>
+
+              <!-- --------------------------SEPARATOR-------------------------- -->
+              <div class="field has-text-centered">
+                <span style="color: #D6D6D6">———————— or ————————</span>
+              </div>
+
+              <!-- CREATE ACCOUNT -->
               <b-button
-                type="is-dark"
-                @click="registrate"
-                :loading="loading"
+                tag="router-link"
+                size="is-small"
+                to="/sign-in"
+                type="is-text"
                 expanded
               >
-                Sign Up
+                Have an account? Sign In!
               </b-button>
-            </div>
-
-            <!-- --------------------------SEPARATOR-------------------------- -->
-            <div class="field has-text-centered">
-              <span style="color: #D6D6D6">———————— or ————————</span>
-            </div>
-
-            <!-- CREATE ACCOUNT -->
-            <b-button
-              tag="router-link"
-              size="is-small"
-              to="/sign-in"
-              type="is-text"
-              expanded
-            >
-              Have an account? Sign In!
-            </b-button>
+            </ValidationObserver>
           </section>
 
           <!-- 1/3 Horizontal center -->
@@ -102,6 +88,8 @@
 </template>
 
 <script>
+import InputValidation from "@/components/input-validation.vue";
+
 export default {
   data() {
     return {
@@ -141,6 +129,9 @@ export default {
     loading() {
       return this.$store.getters.loading;
     }
+  },
+  components: {
+    InputValidation
   }
 };
 </script>

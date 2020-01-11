@@ -10,18 +10,18 @@
       :type="{ 'is-danger': errors[0], 'is-success': valid }"
       :message="errors"
     >
-      <b-input v-model="innerValue" v-bind="$attrs"></b-input>
+      <p class="control has-icons-left">
+        <b-input v-model="innerValue" v-bind="$attrs"></b-input>
+        <span class="icon is-small is-left">
+          <i :class="icon"></i>
+        </span>
+      </p>
     </b-field>
   </ValidationProvider>
 </template>
 
 <script>
-import { ValidationProvider } from "vee-validate";
-
 export default {
-  components: {
-    ValidationProvider
-  },
   props: {
     vid: {
       type: String
@@ -33,6 +33,9 @@ export default {
     // must be included in props
     value: {
       type: null
+    },
+    icon: {
+      type: String
     }
   },
   data: () => ({
