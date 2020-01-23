@@ -7,7 +7,7 @@
 
           <ValidationObserver ref="observer">
             <!-- Observer and validate need for button -->
-            <section class="section" slot-scope="{ handleSubmit }">
+            <section class="section" slot-scope="{ validate, valid }">
               <h1 class="title is-1 has-text-centered">
                 Create new
                 <br />account
@@ -67,7 +67,7 @@
               <div class="field">
                 <b-button
                   type="is-dark"
-                  @click="handleSubmit(() => registrate)"
+                  @click="validate().then(valid ? registrate() : 0)"
                   :loading="loading"
                   expanded
                 >
@@ -113,8 +113,6 @@ export default {
   },
   methods: {
     registrate() {
-      // eslint-disable-next-line no-console
-      console.log("hey");
       const user = {
         name: this.user_name,
         email: this.user_mail,
