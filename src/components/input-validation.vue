@@ -7,8 +7,8 @@
     <b-field
       slot-scope="{ errors, valid }"
       v-bind="$attrs"
-      :type="{ 'is-danger': errors[0], 'is-success': valid }"
-      :message="errors"
+      :type="{ 'is-danger': errors[0], 'is-dark': valid }"
+      :message="errors[0]"
     >
       <p class="control has-icons-left">
         <b-input v-model="innerValue" v-bind="$attrs"></b-input>

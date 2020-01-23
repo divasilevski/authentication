@@ -5,61 +5,74 @@
         <div class="column is-centered">
           <!-- 1/3 Horizontal center -->
 
-          <section>
-            <h1 class="title is-1 has-text-centered">
-              Create new
-              <br />account
-            </h1>
+          <ValidationObserver ref="observer">
+            <!-- Observer and validate need for button -->
+            <section class="section" slot-scope="{ handleSubmit }">
+              <h1 class="title is-1 has-text-centered">
+                Create new
+                <br />account
+              </h1>
 
-            <ValidationObserver ref="observer">
               <!-- USERNAME -->
               <InputValidation
-                rules="required"
+                vid="username"
+                name="Username"
+                rules="required|alpha_spaces"
                 type="text"
                 placeholder="Username"
                 v-model="user_name"
                 icon="fa fa-user"
-              />
+              ></InputValidation>
+              <p style="margin-top: .75rem"></p>
 
               <!-- EMAIL ADRESS -->
               <InputValidation
+                vid="email"
+                name="Email"
                 rules="required|email"
                 type="email"
                 placeholder="Email address"
                 v-model="user_mail"
                 icon="fas fa-envelope"
-              />
+              ></InputValidation>
+              <p style="margin-top: .75rem"></p>
 
               <!-- PASSWORD -->
               <InputValidation
-                rules="required"
-                type="password"
                 vid="password"
+                name="Password"
+                rules="required|min:6"
+                type="password"
                 placeholder="Create password"
                 v-model="user_password"
                 icon="fas fa-lock"
                 password-reveal
-              />
+              ></InputValidation>
+              <p style="margin-top: .75rem"></p>
 
               <!-- CONFIRM PASSWORD -->
               <InputValidation
+                vid="confirmed_password"
+                name="Confirmed password"
                 rules="required|confirmed:password"
                 type="password"
                 placeholder="Confirm password"
                 v-model="confirm_password"
                 icon="fa fa-key"
                 password-reveal
-              />
+              ></InputValidation>
+              <p style="margin-top: .75rem"></p>
 
               <!-- REGGISTRATE BUTTON -->
               <div class="field">
                 <b-button
                   type="is-dark"
-                  @click="registrate"
+                  @click="handleSubmit(() => registrate)"
                   :loading="loading"
                   expanded
-                  >Sign Up</b-button
                 >
+                  Sign Up
+                </b-button>
               </div>
 
               <!-- --------------------------SEPARATOR-------------------------- -->
@@ -77,8 +90,8 @@
               >
                 Have an account? Sign In!
               </b-button>
-            </ValidationObserver>
-          </section>
+            </section>
+          </ValidationObserver>
 
           <!-- 1/3 Horizontal center -->
         </div>
@@ -95,12 +108,13 @@ export default {
     return {
       user_name: "",
       user_mail: "",
-      user_password: "",
-      isTag: false
+      user_password: ""
     };
   },
   methods: {
     registrate() {
+      // eslint-disable-next-line no-console
+      console.log("hey");
       const user = {
         name: this.user_name,
         email: this.user_mail,
@@ -123,9 +137,6 @@ export default {
     }
   },
   computed: {
-    errorTag() {
-      return this.$store.getters.error;
-    },
     loading() {
       return this.$store.getters.loading;
     }

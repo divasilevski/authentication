@@ -11,15 +11,11 @@ Vue.use(Buefy);
 
 // VALIDATION BLOCK
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
-import { confirmed, required, email } from "vee-validate/dist/rules";
-
 Vue.component("ValidationProvider", ValidationProvider);
 Vue.component("ValidationObserver", ValidationObserver);
 
-extend("required", required);
-extend("email", email);
-//extend("password", password);
-extend("confirmed", confirmed);
+import validation from "./validation.js";
+validation(extend);
 
 // FIREBASE BLOCK
 import firebase from "firebase/app";
