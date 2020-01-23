@@ -5,104 +5,103 @@
         <div class="column is-centered">
           <!-- 1/3 Horizontal center -->
 
-          <section>
-            <h1 class="title is-1 has-text-centered">
-              Login to <br />
-              account
-            </h1>
+          <ValidationObserver ref="observer">
+            <!-- Observer and validate need for button -->
+            <section slot-scope="{ validate, valid }">
+              <h1 class="title is-1 has-text-centered">
+                Login to
+                <br />account
+              </h1>
 
-            <!-- EMAIL ADRESS -->
-            <b-field>
-              <p class="control has-icons-left">
-                <b-input
-                  placeholder="Email address"
-                  type="email"
-                  v-model="user_mail"
-                ></b-input>
-                <span class="icon is-small is-left">
-                  <i class="fas fa-envelope"></i>
-                </span>
-              </p>
-            </b-field>
+              <!-- EMAIL ADRESS -->
+              <InputValidation
+                vid="email"
+                name="Email"
+                rules="required|email"
+                type="email"
+                placeholder="Email address"
+                v-model="user_mail"
+                icon="fas fa-envelope"
+              ></InputValidation>
+              <p style="margin-top: .75rem"></p>
 
-            <!-- PASSWORD -->
-            <b-field>
-              <p class="control has-icons-left">
-                <b-input
-                  type="password"
-                  placeholder="Password"
-                  v-model="user_password"
-                  password-reveal
-                ></b-input>
-                <span class="icon is-small is-left">
-                  <i class="fa fa-key"></i>
-                </span>
-              </p>
-            </b-field>
+              <!-- PASSWORD -->
+              <InputValidation
+                vid="password"
+                name="Password"
+                rules="required|min:6"
+                type="password"
+                placeholder="Create password"
+                v-model="user_password"
+                icon="fas fa-lock"
+                password-reveal
+              ></InputValidation>
+              <p style="margin-top: .75rem"></p>
 
-            <!-- REGGISTRATE BUTTON -->
-            <div class="field">
+              <!-- LOGIN BUTTON -->
+              <div class="field">
+                <b-button
+                  type="is-dark"
+                  @click="validate().then(valid ? login() : 0)"
+                  :loading="loading"
+                  expanded
+                >
+                  Sign In
+                </b-button>
+              </div>
+
+              <!-- --------------------------SEPARATOR-------------------------- -->
+              <div class="field has-text-centered">
+                <span style="color: #D6D6D6">———————— or ————————</span>
+              </div>
+
+              <!-- GOOGLE -->
+              <div class="field">
+                <b-button
+                  @click="loginGoogle"
+                  icon-left="fab fa-google"
+                  icon-pack="fab"
+                  expanded
+                >
+                  Sign In using Google
+                </b-button>
+              </div>
+
+              <!-- GITHUB -->
+              <div class="field">
+                <b-button icon-left="fab fa-github" icon-pack="fab" expanded>
+                  Sign In using GitHub
+                </b-button>
+              </div>
+
+              <!-- --------------------------SEPARATOR-------------------------- -->
+              <div class="field has-text-centered">
+                <span style="color: #D6D6D6">———————— or ————————</span>
+              </div>
+
+              <!-- CREATE ACCOUNT -->
               <b-button
-                type="is-dark"
-                @click="login"
-                :loading="loading"
+                tag="router-link"
+                size="is-small"
+                to="/sign-up"
+                type="is-text"
                 expanded
               >
-                Sign In
+                Don't have an account? Sign Up!
               </b-button>
-            </div>
 
-            <!-- --------------------------SEPARATOR-------------------------- -->
-            <div class="field has-text-centered">
-              <span style="color: #D6D6D6">———————— or ————————</span>
-            </div>
-
-            <!-- GOOGLE -->
-            <div class="field">
+              <!-- FORGOT PASSWORD -->
               <b-button
-                @click="loginGoogle"
-                icon-left="fab fa-google"
-                icon-pack="fab"
+                tag="router-link"
+                size="is-small"
+                to="/sign-up"
+                type="is-text"
                 expanded
               >
-                Sign In using Google
+                Forgot your password?
               </b-button>
-            </div>
-
-            <!-- GITHUB -->
-            <div class="field">
-              <b-button icon-left="fab fa-github" icon-pack="fab" expanded>
-                Sign In using GitHub
-              </b-button>
-            </div>
-
-            <!-- --------------------------SEPARATOR-------------------------- -->
-            <div class="field has-text-centered">
-              <span style="color: #D6D6D6">———————— or ————————</span>
-            </div>
-
-            <!-- CREATE ACCOUNT -->
-            <b-button
-              tag="router-link"
-              size="is-small"
-              to="/sign-up"
-              type="is-text"
-              expanded
-            >
-              Don't have an account? Sign Up!
-            </b-button>
-
-            <!-- FORGOT PASSWORD -->
-            <b-button
-              tag="router-link"
-              size="is-small"
-              to="/sign-up"
-              type="is-text"
-              expanded
-            >
-              Forgot your password?
-            </b-button>
-          </section>
+            </section>
+          </ValidationObserver>
 
           <!-- 1/3 Horizontal center -->
         </div>
@@ -112,6 +111,8 @@
 </template>
 
 <script>
+import InputValidation from "@/components/input-validation.vue";
+
 export default {
   data() {
     return {
@@ -158,12 +159,12 @@ export default {
     }
   },
   computed: {
-    errorTag() {
-      return this.$store.getters.error;
-    },
     loading() {
       return this.$store.getters.loading;
     }
+  },
+  components: {
+    InputValidation
   }
 };
 </script>

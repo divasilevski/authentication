@@ -7,7 +7,7 @@
 
           <ValidationObserver ref="observer">
             <!-- Observer and validate need for button -->
-            <section class="section" slot-scope="{ validate, valid }">
+            <section slot-scope="{ validate, valid }">
               <h1 class="title is-1 has-text-centered">
                 Create new
                 <br />account
@@ -57,13 +57,12 @@
                 rules="required|confirmed:password"
                 type="password"
                 placeholder="Confirm password"
-                v-model="confirm_password"
                 icon="fa fa-key"
                 password-reveal
               ></InputValidation>
               <p style="margin-top: .75rem"></p>
 
-              <!-- REGGISTRATE BUTTON -->
+              <!-- REGISTRATE BUTTON -->
               <div class="field">
                 <b-button
                   type="is-dark"
