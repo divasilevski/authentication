@@ -131,7 +131,7 @@ export default {
       this.$store
         .dispatch("loginUser", user)
         .then(() => {
-          this.$router.push("/user");
+          this.$router.push("/user").catch(() => {});
         })
         .catch(error => {
           this.$buefy.toast.open({

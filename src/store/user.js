@@ -50,6 +50,14 @@ export default {
           .auth()
           .signInWithEmailAndPassword(email, password);
 
+        if (firebase.auth().currentUser.emailVerified) {
+          // eslint-disable-next-line no-console
+          console.log("EMAIL VERIFIED");
+        } else {
+          // eslint-disable-next-line no-console
+          console.log("EMAIL NOT VERIFIED");
+        }
+
         // LOAD data FROM DATABASE and decryption
         const data = await firebase
           .database()
