@@ -1,17 +1,17 @@
 <template>
   <div class="app">
-    <AppTubs></AppTubs>
+    <AppNuvbar></AppNuvbar>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import AppTubs from "@/components/app-tubs.vue";
+import AppNuvbar from "@/components/app-navbar.vue";
 
 export default {
   name: "app",
   components: {
-    AppTubs
+    AppNuvbar
   }
 };
 </script>
