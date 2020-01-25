@@ -20,12 +20,9 @@ const routes = [
     path: "/user",
     name: "user",
     component: User,
-    beforeEnter(to, from, next) {
-      if (!firebase.auth().currentUser) {
-        next("/sign-in");
-      } else {
-        next();
-      }
+    beforeEnter: (to, from, next) => {
+      // faster via firebase
+      !firebase.auth().currentUser ? next("/sign-in") : next();
     }
   },
   {

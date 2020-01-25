@@ -1,42 +1,34 @@
 <template>
-  <nav class="navbar is-white">
-    <div class="navbar-menu">
-      <div class="navbar-end">
-        <!-- HOME BUTTON -->
-        <b-navbar-item @click="home">Home</b-navbar-item>
-
-        <!-- USER BUTTON -->
-        <b-navbar-item @click="user">User</b-navbar-item>
-
-        <!-- MENU BUTTON -->
-        <b-dropdown
-          :disabled="!this.$store.getters.checkUser"
-          position="is-bottom-left"
-          aria-role="menu"
-        >
-          <a class="navbar-item" slot="trigger" role="button">
-            <span>
-              <i class="fas fa-ellipsis-v"></i>
-            </span>
-          </a>
-
-          <b-dropdown-item custom aria-role="menuitem">
-            <span>{{ username }}</span>
-            <b></b>
-          </b-dropdown-item>
-          <hr class="dropdown-divider" aria-role="menuitem" />
-          <b-dropdown-item value="settings">
-            <b-icon icon="settings"></b-icon>Settings
-          </b-dropdown-item>
-          <b-dropdown-item value="logout" aria-role="menuitem">
-            <b-icon icon="logout"></b-icon>Logout
-          </b-dropdown-item>
-        </b-dropdown>
-      </div>
-
+  <b-navbar class="is-white">
+    <template slot="end">
       <!-- END NAVBAR -->
-    </div>
-  </nav>
+      <b-navbar-item @click="home" class="is-dark">
+        <div class="media">
+          <span class="icon">
+            <i class="fas fa-home"></i>
+          </span>
+          <span>Home</span>
+        </div>
+      </b-navbar-item>
+
+      <div class="navbar-item has-dropdown is-hoverable border-radius">
+        <a :class="arrowless1" @click="user">
+          <div class="media">
+            <span class="icon">
+              <i class="fas fa-user"></i>
+            </span>
+            <span class="has-text">User</span>
+          </div>
+        </a>
+
+        <div class="navbar-dropdown" :style="arrowless2">
+          <a class="navbar-item">Settings</a>
+          <a class="navbar-item">Logout</a>
+        </div>
+      </div>
+      <!-- END NAVBAR -->
+    </template>
+  </b-navbar>
 </template>
 
 <script>
@@ -55,6 +47,16 @@ export default {
     },
     settings() {
       this.$router.push("/user/settings").catch(() => {});
+    }
+  },
+  computed: {
+    arrowless1() {
+      return !this.$store.getters.checkUser
+        ? "navbar-link is-arrowless"
+        : "navbar-link";
+    },
+    arrowless2() {
+      return !this.$store.getters.checkUser ? "display:none" : "";
     }
   }
 };

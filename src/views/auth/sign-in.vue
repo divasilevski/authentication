@@ -1,8 +1,8 @@
 <template>
   <div class="columns is-centered is-variable is-10">
-    <div class="column is-6-tablet is-4-desktop is-4-widescreen is-centered">
-      <div class="columns is-centered">
-        <div class="column is-centered">
+    <div class="column is-11-mobile is-6-tablet is-4-desktop is-4-widescreen" style="margin:0px">
+      <div class="container">
+        <div class="">
           <!-- 1/3 Horizontal center -->
 
           <ValidationObserver ref="observer">

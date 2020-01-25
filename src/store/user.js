@@ -120,28 +120,15 @@ export default {
       }
     },
     loggedUser: async ({ commit }, payload) => {
-      commit("clearError");
-      commit("setLoading", true);
+      // LOAD data FROM DATABASE and decryption
+      const data = await firebase
+        .database()
+        .ref(`user_data/${payload.uid}`)
+        .once("value");
+      const user_data = data.val();
 
-      try {
-        // ******************************************************
-        // LOAD data FROM DATABASE and decryption
-        const data = await firebase
-          .database()
-          .ref(`user_data/${payload.uid}`)
-          .once("value");
-        const user_data = data.val();
-
-        // Load USER
-        commit("setUser", new User(payload.uid, user_data.name));
-
-        // ******************************************************
-        commit("setLoading", false);
-      } catch (error) {
-        commit("setError", error.message);
-        commit("setLoading", false);
-        throw error;
-      }
+      // Load USER
+      commit("setUser", new User(payload.uid, user_data.name));
     },
     logoutUser: async ({ commit }) => {
       commit("clearError");

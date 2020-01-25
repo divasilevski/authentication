@@ -9,7 +9,6 @@
 
 <script>
 import UserPreview from "@/components/user-preview.vue";
-// import firebase from "firebase/app";
 
 export default {
   name: "user",
