@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import store from "../store";
+import firebase from "firebase/app";
 
 // views
 import Home from "../views/home.vue";
@@ -18,15 +18,19 @@ const routes = [
   },
   {
     path: "/user",
-    name: "/user",
+    name: "user",
     component: User,
-    beforeRouteEnter(to, from, next) {
-      store.getters.checkUser ? next() : next("/sign-in");
+    beforeEnter(to, from, next) {
+      if (!firebase.auth().currentUser) {
+        next("/sign-in");
+      } else {
+        next();
+      }
     }
   },
   {
     path: "/user/settings",
-    name: "user",
+    name: "settings",
     component: User
   },
   {
