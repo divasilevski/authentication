@@ -20,7 +20,7 @@ const routes = [
     path: "/user",
     name: "/user",
     component: User,
-    beforeEnter(to, from, next) {
+    beforeRouteEnter(to, from, next) {
       store.getters.checkUser ? next() : next("/sign-in");
     }
   },

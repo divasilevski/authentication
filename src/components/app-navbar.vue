@@ -1,19 +1,19 @@
 <template>
-  <nav class="navbar">
+  <nav class="navbar is-white">
     <div class="navbar-menu">
       <div class="navbar-end">
         <!-- HOME BUTTON -->
-        <b-navbar-item @click="home">
-          Home
-        </b-navbar-item>
+        <b-navbar-item @click="home">Home</b-navbar-item>
 
-        <!-- HOME BUTTON -->
-        <b-navbar-item @click="user">
-          User
-        </b-navbar-item>
+        <!-- USER BUTTON -->
+        <b-navbar-item @click="user">User</b-navbar-item>
 
         <!-- MENU BUTTON -->
-        <b-dropdown v-model="navigation" position="is-bottom-left" aria-role="menu">
+        <b-dropdown
+          :disabled="!this.$store.getters.checkUser"
+          position="is-bottom-left"
+          aria-role="menu"
+        >
           <a class="navbar-item" slot="trigger" role="button">
             <span>
               <i class="fas fa-ellipsis-v"></i>
@@ -21,8 +21,8 @@
           </a>
 
           <b-dropdown-item custom aria-role="menuitem">
-            Logged as
-            <b>Rafael Beraldo</b>
+            <span>{{ username }}</span>
+            <b></b>
           </b-dropdown-item>
           <hr class="dropdown-divider" aria-role="menuitem" />
           <b-dropdown-item value="settings">
@@ -41,6 +41,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      username: "username"
+    };
+  },
   methods: {
     home() {
       this.$router.push("/").catch(() => {});
