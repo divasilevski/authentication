@@ -35,10 +35,11 @@
           </div>
         </a>
         <div class="navbar-dropdown is-right">
-          <a class="navbar-item" @click="user">User</a>
+          <a class="navbar-item" @click="home">Home page</a>
+          <a class="navbar-item" @click="user">Your profile</a>
           <hr class="navbar-divider" />
-          <a class="navbar-item">Settings</a>
-          <a class="navbar-item">Logout</a>
+          <a class="navbar-item" @click="settings">Settings</a>
+          <a class="navbar-item" @click="logout">Logout</a>
         </div>
       </div>
     </template>
@@ -47,26 +48,27 @@
 
 <script>
 export default {
-  data() {
-    return {
-      username: "username"
-    };
-  },
   methods: {
     home() {
       this.$router.push("/").catch(() => {});
-    },
-    user() {
-      this.$router.push("/user").catch(() => {});
-    },
-    settings() {
-      this.$router.push("/user/settings").catch(() => {});
     },
     signIn() {
       this.$router.push("/sign-in").catch(() => {});
     },
     signUp() {
       this.$router.push("/sign-up").catch(() => {});
+    },
+    user() {
+      this.$router.push("/user").catch(() => {});
+    },
+    settings() {
+      this.$router.push("/settings").catch(() => {});
+    },
+    logout() {
+      this.$store.state.isAuth = false;
+      this.$store.dispatch("logoutUser").then(() => {
+        this.$router.push("/sign-in");
+      });
     }
   },
   computed: {

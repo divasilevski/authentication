@@ -33,9 +33,6 @@
 
     <div class="navbar-item">
       <section>
-        <!-- Logout button -->
-        <b-button @click="logout">Logout</b-button>
-
         <!-- Delete button -->
         <b-button @click="deleteUser">Delete account</b-button>
       </section>
@@ -52,12 +49,6 @@ export default {
     };
   },
   methods: {
-    logout() {
-      this.$store.state.isAuth = false;
-      this.$store.dispatch("logoutUser").then(() => {
-        this.$router.push("/sign-in");
-      });
-    },
     deleteUser() {
       this.$store.dispatch("deleteUser");
       this.$router.push("/sign-up");

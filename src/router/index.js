@@ -5,6 +5,7 @@ import store from "../store";
 
 // views
 import Home from "../views/home.vue";
+import Settings from "../views/settings.vue";
 import User from "../views/user.vue";
 import SignIn from "../views/auth/sign-in.vue";
 import SignUp from "../views/auth/sign-up.vue";
@@ -26,9 +27,9 @@ const routes = [
     }
   },
   {
-    path: "/user/settings",
+    path: "/settings",
     name: "settings",
-    component: User
+    component: Settings
   },
   {
     path: "/sign-in",
