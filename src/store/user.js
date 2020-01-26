@@ -2,10 +2,12 @@ import firebase from "firebase/app";
 
 export default {
   state: {
+    isAuth: undefined,
     user: null
   },
   mutations: {
-    setUser: (state, payload) => (state.user = payload)
+    setUser: (state, payload) => (state.user = payload),
+    isAuth: (state, payload) => (state.isAuth = payload)
   },
   actions: {
     registerUser: async ({ commit }, { name, email, password }) => {
@@ -67,6 +69,7 @@ export default {
         const user_data = data.val();
 
         // Create USER
+        commit("isAuth", true);
         commit("setUser", new User(user.user.uid, user_data.name));
 
         // ******************************************************
@@ -120,15 +123,28 @@ export default {
       }
     },
     loggedUser: async ({ commit }, payload) => {
-      // LOAD data FROM DATABASE and decryption
-      const data = await firebase
-        .database()
-        .ref(`user_data/${payload.uid}`)
-        .once("value");
-      const user_data = data.val();
+      commit("clearError");
+      commit("setLoading", true);
 
-      // Load USER
-      commit("setUser", new User(payload.uid, user_data.name));
+      try {
+        // ******************************************************
+        // LOAD data FROM DATABASE and decryption
+        const data = await firebase
+          .database()
+          .ref(`user_data/${payload.uid}`)
+          .once("value");
+        const user_data = data.val();
+
+        // Load USER
+        commit("setUser", new User(payload.uid, user_data.name));
+
+        // ******************************************************
+        commit("setLoading", false);
+      } catch (error) {
+        commit("setError", error.message);
+        commit("setLoading", false);
+        throw error;
+      }
     },
     logoutUser: async ({ commit }) => {
       commit("clearError");
@@ -137,6 +153,7 @@ export default {
       try {
         // ******************************************************
         await firebase.auth().signOut();
+        commit("isAuth", false);
         commit("setUser", null);
 
         // ******************************************************
@@ -212,7 +229,8 @@ export default {
   },
   getters: {
     user: state => state.user,
-    checkUser: state => state.user !== null
+    checkUser: state => state.user !== null,
+    isAuth: state => state.isAuth
   }
 };
 

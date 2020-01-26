@@ -127,13 +127,14 @@ export default {
         email: this.user_mail,
         password: this.user_password
       };
-
+      this.$store.state.isAuth = true;
       this.$store
         .dispatch("loginUser", user)
         .then(() => {
           this.$router.push("/user").catch(() => {});
         })
         .catch(error => {
+          this.$store.state.isAuth = false;
           this.$buefy.toast.open({
             message: error,
             duration: 5000,
@@ -146,6 +147,7 @@ export default {
       this.$store
         .dispatch("loginGoogle")
         .then(() => {
+          this.$store.state.isAuth = true;
           this.$router.push("/user");
         })
         .catch(error => {

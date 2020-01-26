@@ -53,8 +53,10 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch("logoutUser").then();
-      this.$router.push("/sign-in");
+      this.$store.state.isAuth = false;
+      this.$store.dispatch("logoutUser").then(() => {
+        this.$router.push("/sign-in");
+      });
     },
     deleteUser() {
       this.$store.dispatch("deleteUser");

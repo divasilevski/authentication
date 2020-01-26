@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import firebase from "firebase/app";
+import store from "../store";
 
 // views
 import Home from "../views/home.vue";
@@ -21,8 +22,7 @@ const routes = [
     name: "user",
     component: User,
     beforeEnter: (to, from, next) => {
-      // faster via firebase
-      !firebase.auth().currentUser ? next("/sign-in") : next();
+      store.state.isAuth ? next() : next("/sign-in");
     }
   },
   {
@@ -46,6 +46,16 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  // Reloading page or first try, check isAuth
+  if (store.state.isAuth === undefined) {
+    firebase.auth().currentUser
+      ? (store.state.isAuth = true)
+      : (store.state.isAuth = false);
+  }
+  next();
 });
 
 export default router;

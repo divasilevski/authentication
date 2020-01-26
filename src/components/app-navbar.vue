@@ -1,8 +1,8 @@
 <template>
   <b-navbar class="is-white">
-    <template slot="end">
-      <!-- END NAVBAR -->
-      <b-navbar-item @click="home" class="is-dark">
+    <!-- BREND NAVBAR -->
+    <template slot="brand">
+      <b-navbar-item @click="home">
         <div class="media">
           <span class="icon">
             <i class="fas fa-home"></i>
@@ -10,23 +10,37 @@
           <span>Home</span>
         </div>
       </b-navbar-item>
+    </template>
 
-      <div class="navbar-item has-dropdown is-hoverable border-radius">
-        <a :class="arrowless1" @click="user">
+    <!-- END NAVBAR -->
+    <template slot="end">
+      <!-- AUTH -->
+      <b-navbar-item tag="div" :style="isAuth ? 'display:none' : ''">
+        <div class="buttons">
+          <a class="button is-dark" @click="signIn">Sign in</a>
+          <a class="button is-light" @click="signUp">Sign up</a>
+        </div>
+      </b-navbar-item>
+
+      <!-- USER -->
+      <div
+        class="navbar-item has-dropdown is-hoverable border-radius"
+        :style="!isAuth ? 'display:none' : ''"
+      >
+        <a class="navbar-item">
           <div class="media">
             <span class="icon">
               <i class="fas fa-user"></i>
             </span>
-            <span class="has-text">User</span>
           </div>
         </a>
-
-        <div class="navbar-dropdown" :style="arrowless2">
+        <div class="navbar-dropdown is-right">
+          <a class="navbar-item" @click="user">User</a>
+          <hr class="navbar-divider" />
           <a class="navbar-item">Settings</a>
           <a class="navbar-item">Logout</a>
         </div>
       </div>
-      <!-- END NAVBAR -->
     </template>
   </b-navbar>
 </template>
@@ -47,16 +61,20 @@ export default {
     },
     settings() {
       this.$router.push("/user/settings").catch(() => {});
+    },
+    signIn() {
+      this.$router.push("/sign-in").catch(() => {});
+    },
+    signUp() {
+      this.$router.push("/sign-up").catch(() => {});
     }
   },
   computed: {
-    arrowless1() {
-      return !this.$store.getters.checkUser
-        ? "navbar-link is-arrowless"
-        : "navbar-link";
-    },
-    arrowless2() {
-      return !this.$store.getters.checkUser ? "display:none" : "";
+    isAuth() {
+      if (this.$store.getters.isAuth === undefined) {
+        return this.$store.state.isAuth;
+      }
+      return this.$store.getters.isAuth;
     }
   }
 };
