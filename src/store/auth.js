@@ -7,6 +7,7 @@ export default {
   },
   mutations: {
     setUser: (state, payload) => (state.user = payload),
+    setUsername: (state, payload) => (state.user.name = payload),
     isAuth: (state, payload) => (state.isAuth = payload)
   },
   actions: {
@@ -146,85 +147,32 @@ export default {
         throw error;
       }
     },
-    logoutUser: async ({ commit }) => {
-      commit("clearError");
-      commit("setLoading", true);
+    signOut: async ({ commit }) => {
+      // Выходим из аккаунта
+      commit("isAuth", false);
 
-      try {
-        // ******************************************************
-        await firebase.auth().signOut();
-        commit("isAuth", false);
-        commit("setUser", null);
-
-        // ******************************************************
-        commit("setLoading", false);
-      } catch (error) {
-        commit("setError", error.message);
-        commit("setLoading", false);
-        throw error;
-      }
+      await firebase.auth().signOut();
+      commit("setUser", null);
     },
-    deleteUser: async ({ commit, getters }) => {
-      commit("clearError");
-      commit("setLoading", true);
-
-      try {
-        // ******************************************************
-        const user = firebase.auth().currentUser;
-        user.delete();
-
-        firebase
-          .database()
-          .ref(`user_data/${getters.user.id}`)
-          .remove();
-
-        commit("setUser", null);
-
-        // ******************************************************
-        commit("setLoading", false);
-      } catch (error) {
-        commit("setError", error.message);
-        commit("setLoading", false);
-        throw error;
-      }
+    changePassword: async (undefined, new_password) => {
+      // Меняем пароль текущего пользователя на новый
+      const user = firebase.auth().currentUser;
+      await user.updatePassword(new_password);
     },
-    changeUserName: async ({ commit, getters }, user_name) => {
-      commit("clearError");
-      commit("setLoading", true);
+    deleteAccount: async ({ commit, getters }) => {
+      // Выходим из аккаунта
+      commit("isAuth", false);
 
-      try {
-        // ******************************************************
-        await firebase
-          .database()
-          .ref(`user_data/${getters.user.id}`)
-          .update({ name: user_name });
+      // Удаляем регистрацию
+      const user = firebase.auth().currentUser;
+      user.delete();
 
-        getters.user.name = user_name;
-
-        // ******************************************************
-        commit("setLoading", false);
-      } catch (error) {
-        commit("setError", error.message);
-        commit("setLoading", false);
-        throw error;
-      }
-    },
-    changePassword: async ({ commit }, new_password) => {
-      commit("clearError");
-      commit("setLoading", true);
-
-      try {
-        // ******************************************************
-        const user = firebase.auth().currentUser;
-        await user.updatePassword(new_password);
-
-        // ******************************************************
-        commit("setLoading", false);
-      } catch (error) {
-        commit("setError", error.message);
-        commit("setLoading", false);
-        throw error;
-      }
+      // Очищаем базу данных и обнуляем пользователя
+      firebase
+        .database()
+        .ref(`user_data/${getters.user.id}`)
+        .remove();
+      commit("setUser", null);
     }
   },
   getters: {
@@ -234,7 +182,7 @@ export default {
   }
 };
 
-/** Класс чисто для удобства */
+/** Class for convenience */
 class User {
   constructor(id, name) {
     this.id = id;

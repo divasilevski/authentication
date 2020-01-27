@@ -1,14 +1,16 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import user from "./user";
+import auth from "./auth";
 import loading from "./loading";
+import database from "./database";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    user,
-    loading
+    auth,
+    loading,
+    database
   }
 });

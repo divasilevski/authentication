@@ -65,8 +65,7 @@ export default {
       this.$router.push("/settings").catch(() => {});
     },
     logout() {
-      this.$store.state.isAuth = false;
-      this.$store.dispatch("logoutUser").then(() => {
+      this.$store.dispatch("signOut").then(() => {
         this.$router.push("/sign-in");
       });
     }
