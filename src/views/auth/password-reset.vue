@@ -23,32 +23,7 @@
           ></InputValidation>
           <p style="margin-top: .75rem"></p>
 
-          <!-- PASSWORD -->
-          <InputValidation
-            vid="password"
-            name="Password"
-            rules="required|min:6"
-            type="password"
-            placeholder="Create password"
-            v-model="user_password"
-            icon="fas fa-lock"
-            password-reveal
-          ></InputValidation>
-          <p style="margin-top: .75rem"></p>
-
-          <!-- CONFIRM PASSWORD -->
-          <InputValidation
-            vid="confirmed_password"
-            name="Confirmed password"
-            rules="required|confirmed:password"
-            type="password"
-            placeholder="Confirm password"
-            icon="fa fa-key"
-            password-reveal
-          ></InputValidation>
-          <p style="margin-top: .75rem"></p>
-
-          <!-- REGISTRATE BUTTON -->
+          <!-- RESET BUTTON -->
           <div class="field">
             <b-button
               type="is-dark"
@@ -56,7 +31,7 @@
               :loading="loading"
               expanded
             >
-              Reset
+              Send password reset email
             </b-button>
           </div>
         </section>
@@ -73,26 +48,17 @@ import InputValidation from "@/components/input-validation.vue";
 export default {
   data() {
     return {
-      user_name: "",
-      user_mail: "",
-      user_password: ""
+      user_mail: ""
     };
   },
   methods: {
     reset() {
-      const user = {
-        name: this.user_name,
-        email: this.user_mail,
-        password: this.user_password
-      };
-      this.$store.state.isAuth = true;
       this.$store
-        .dispatch("signUp", user)
+        .dispatch("resetPassword", this.user_mail)
         .then(() => {
-          this.$router.push("/user").catch(() => {});
+          this.$router.push("/sign-in").catch(() => {});
         })
         .catch(error => {
-          this.$store.state.isAuth = false;
           this.$buefy.toast.open({
             message: error,
             duration: 5000,

@@ -108,13 +108,19 @@ export default {
       await user.updatePassword(new_password);
     },
 
-    deleteAccount: async ({ commit, dispatch }) => {
+    deleteAccount: ({ commit, dispatch }) => {
       commit("isAuth", false);
       commit("setUser", null);
 
       const user = firebase.auth().currentUser;
       user.delete();
       dispatch("removeData");
+    },
+
+    resetPassword: async ({ dispatch }, email) => {
+      await dispatch("loadingWrapper", async () => {
+        await firebase.auth().sendPasswordResetEmail(email);
+      });
     }
   },
   getters: {
