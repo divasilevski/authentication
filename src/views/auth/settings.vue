@@ -101,7 +101,7 @@ export default {
       this.$router.push("/").catch(() => {});
     },
     changeUsername() {
-      this.$store.dispatch("updateUserData", { name: this.new_username });
+      this.$store.dispatch("updateData", { name: this.new_username });
       this.$store.commit("setUsername", this.new_username);
       this.$buefy.toast.open({
         message: "Username has been changed.",

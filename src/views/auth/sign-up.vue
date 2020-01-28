@@ -119,7 +119,7 @@ export default {
       };
 
       this.$store
-        .dispatch("registerUser", user)
+        .dispatch("signUp", user)
         .then(() => {
           this.$router.push("/user").catch(() => {});
         })

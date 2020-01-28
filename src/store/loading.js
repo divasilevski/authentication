@@ -11,28 +11,25 @@ export default {
   actions: {
     setLoading: ({ commit }, payload) => commit("setLoading", payload),
     setError: ({ commit }, payload) => commit("setError", payload),
-    clearError: ({ commit }) => commit("clearError")
+    clearError: ({ commit }) => commit("clearError"),
+
+    loadingWrapper: async ({ commit }, payload) => {
+      commit("clearError");
+      commit("setLoading", true);
+      try {
+        // wrapper for arrow function >>
+        await payload();
+        // << payload: async () => {}
+        commit("setLoading", false);
+      } catch (error) {
+        commit("setError", error.message);
+        commit("setLoading", false);
+        throw error;
+      }
+    }
   },
   getters: {
     loading: state => state.loading,
     error: state => state.error
   }
 };
-
-/** Стандартная обёртка для асинхронных (actions)
-method: async ({ commit }, payload) => {
-  commit("clearError");
-  commit("setLoading", true);
-
-  try {
-    // await methods
-    // other methods
-    
-    commit("setLoading", false);
-  } catch (error) {
-    commit("setError", error.message);
-    commit("setLoading", false);
-    throw error;
-  }
-}
-*/

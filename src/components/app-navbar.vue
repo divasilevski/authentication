@@ -72,9 +72,6 @@ export default {
   },
   computed: {
     isAuth() {
-      if (this.$store.getters.isAuth === undefined) {
-        return this.$store.state.isAuth;
-      }
       return this.$store.getters.isAuth;
     }
   }

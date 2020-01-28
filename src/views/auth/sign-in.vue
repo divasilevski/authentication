@@ -1,6 +1,9 @@
 <template>
   <div class="columns is-centered is-variable is-10">
-    <div class="column is-11-mobile is-6-tablet is-4-desktop is-4-widescreen" style="margin:0px">
+    <div
+      class="column is-11-mobile is-6-tablet is-4-desktop is-4-widescreen"
+      style="margin:0px"
+    >
       <div class="container">
         <div class="">
           <!-- 1/3 Horizontal center -->
@@ -42,7 +45,7 @@
               <div class="field">
                 <b-button
                   type="is-dark"
-                  @click="validate().then(valid ? login() : 0)"
+                  @click="validate().then(valid ? signIn() : 0)"
                   :loading="loading"
                   expanded
                 >
@@ -58,7 +61,7 @@
               <!-- GOOGLE -->
               <div class="field">
                 <b-button
-                  @click="loginGoogle"
+                  @click="signInGoogle"
                   icon-left="fab fa-google"
                   icon-pack="fab"
                   expanded
@@ -69,7 +72,12 @@
 
               <!-- GITHUB -->
               <div class="field">
-                <b-button icon-left="fab fa-github" icon-pack="fab" expanded>
+                <b-button
+                  @click="signInGithub"
+                  icon-left="fab fa-github"
+                  icon-pack="fab"
+                  expanded
+                >
                   Sign In using GitHub
                 </b-button>
               </div>
@@ -117,19 +125,18 @@ export default {
   data() {
     return {
       user_mail: "",
-      user_password: "",
-      is_tag: false
+      user_password: ""
     };
   },
   methods: {
-    login() {
+    signIn() {
       const user = {
         email: this.user_mail,
         password: this.user_password
       };
       this.$store.state.isAuth = true;
       this.$store
-        .dispatch("loginUser", user)
+        .dispatch("signIn", user)
         .then(() => {
           this.$router.push("/user").catch(() => {});
         })
@@ -143,14 +150,32 @@ export default {
           });
         });
     },
-    loginGoogle() {
+    signInGoogle() {
+      this.$store.state.isAuth = true;
       this.$store
-        .dispatch("loginGoogle")
+        .dispatch("signInGoogle")
         .then(() => {
-          this.$store.state.isAuth = true;
           this.$router.push("/user");
         })
         .catch(error => {
+          this.$store.state.isAuth = false;
+          this.$buefy.toast.open({
+            message: error,
+            duration: 5000,
+            position: "is-bottom",
+            type: "is-dark"
+          });
+        });
+    },
+    signInGithub() {
+      this.$store.state.isAuth = true;
+      this.$store
+        .dispatch("signInGithub")
+        .then(() => {
+          this.$router.push("/user");
+        })
+        .catch(error => {
+          this.$store.state.isAuth = false;
           this.$buefy.toast.open({
             message: error,
             duration: 5000,

@@ -5,7 +5,7 @@ import store from "../store";
 
 // views
 import Home from "../views/home.vue";
-import Settings from "../views/settings.vue";
+import Settings from "../views/auth/settings.vue";
 import User from "../views/user.vue";
 import SignIn from "../views/auth/sign-in.vue";
 import SignUp from "../views/auth/sign-up.vue";
@@ -50,7 +50,8 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  // Reloading page or first try, check isAuth
+  // Ловим идентификацию до первой закрузки страницы,
+  // Нельзя словить при создании приложения, так как несуществует store
   if (store.state.isAuth === undefined) {
     firebase.auth().currentUser
       ? (store.state.isAuth = true)
