@@ -24,6 +24,7 @@ export default {
         commit("setUser", { id: user.user.uid, name: name });
       });
     },
+
     signIn: async ({ commit, dispatch }, { email, password }) => {
       await dispatch("loadingWrapper", async () => {
         await dispatch("signOut");
@@ -45,6 +46,7 @@ export default {
         commit("setUser", { id: user.user.uid, name: user_data.name });
       });
     },
+
     signInGoogle: async ({ commit, dispatch }) => {
       await dispatch("loadingWrapper", async () => {
         await dispatch("signOut");
@@ -66,6 +68,7 @@ export default {
         commit("setUser", { id: user.user.uid, name: name });
       });
     },
+
     signInGithub: async ({ commit, dispatch }) => {
       await dispatch("loadingWrapper", async () => {
         await dispatch("signOut");
@@ -87,31 +90,31 @@ export default {
         commit("setUser", { id: user.user.uid, name: name });
       });
     },
-    loggedUser: async ({ commit, dispatch }, payload) => {
+
+    loggedUser: async ({ commit, dispatch }, user) => {
       commit("isAuth", true);
-
       const user_data = await dispatch("loadData");
-
-      commit("setUser", { id: payload.uid, name: user_data.name });
+      commit("setUser", { id: user.uid, name: user_data.name });
     },
+
     signOut: async ({ commit }) => {
       commit("isAuth", false);
-
-      await firebase.auth().signOut();
       commit("setUser", null);
+      await firebase.auth().signOut();
     },
+
     changePassword: async (undefined, new_password) => {
       const user = firebase.auth().currentUser;
       await user.updatePassword(new_password);
     },
+
     deleteAccount: async ({ commit, dispatch }) => {
       commit("isAuth", false);
+      commit("setUser", null);
 
       const user = firebase.auth().currentUser;
       user.delete();
-
       dispatch("removeData");
-      commit("setUser", null);
     }
   },
   getters: {

@@ -102,7 +102,7 @@
               <b-button
                 tag="router-link"
                 size="is-small"
-                to="/sign-up"
+                to="/password-reset"
                 type="is-text"
                 expanded
               >
@@ -134,14 +134,12 @@ export default {
         email: this.user_mail,
         password: this.user_password
       };
-      this.$store.state.isAuth = true;
       this.$store
         .dispatch("signIn", user)
         .then(() => {
           this.$router.push("/user").catch(() => {});
         })
         .catch(error => {
-          this.$store.state.isAuth = false;
           this.$buefy.toast.open({
             message: error,
             duration: 5000,
@@ -151,14 +149,12 @@ export default {
         });
     },
     signInGoogle() {
-      this.$store.state.isAuth = true;
       this.$store
         .dispatch("signInGoogle")
         .then(() => {
           this.$router.push("/user");
         })
         .catch(error => {
-          this.$store.state.isAuth = false;
           this.$buefy.toast.open({
             message: error,
             duration: 5000,
@@ -168,14 +164,12 @@ export default {
         });
     },
     signInGithub() {
-      this.$store.state.isAuth = true;
       this.$store
         .dispatch("signInGithub")
         .then(() => {
           this.$router.push("/user");
         })
         .catch(error => {
-          this.$store.state.isAuth = false;
           this.$buefy.toast.open({
             message: error,
             duration: 5000,

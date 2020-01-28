@@ -6,6 +6,7 @@ import store from "../store";
 // views
 import Home from "../views/home.vue";
 import Settings from "../views/auth/settings.vue";
+import PasswordReset from "../views/auth/password-reset.vue";
 import User from "../views/user.vue";
 import SignIn from "../views/auth/sign-in.vue";
 import SignUp from "../views/auth/sign-up.vue";
@@ -40,6 +41,11 @@ const routes = [
     path: "/sign-up",
     name: "sign-up",
     component: SignUp
+  },
+  {
+    path: "/password-reset",
+    name: "password-reset",
+    component: PasswordReset
   }
 ];
 
