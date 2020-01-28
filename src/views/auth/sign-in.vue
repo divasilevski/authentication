@@ -1,119 +1,112 @@
 <template>
-  <div class="columns is-centered is-variable is-10">
-    <div
-      class="column is-11-mobile is-6-tablet is-4-desktop is-4-widescreen"
-      style="margin:0px"
-    >
-      <div class="container">
-        <div class="">
-          <!-- 1/3 Horizontal center -->
+  <div class="columns is-centered" style="margin:0px">
+    <div class="column is-6-tablet is-4-desktop is-4-widescreen">
+      <!-- 1/3 Horizontal center -->
 
-          <ValidationObserver ref="observer">
-            <!-- Observer and validate need for button -->
-            <section slot-scope="{ validate, valid }">
-              <h1 class="title is-1 has-text-centered">
-                Login to
-                <br />account
-              </h1>
+      <ValidationObserver ref="observer">
+        <!-- Observer and validate need for button -->
+        <section slot-scope="{ validate, valid }">
+          <h1 class="title is-1 has-text-centered">
+            Login to
+            <br />account
+          </h1>
 
-              <!-- EMAIL ADRESS -->
-              <InputValidation
-                vid="email"
-                name="Email"
-                rules="required|email"
-                type="email"
-                placeholder="Email address"
-                v-model="user_mail"
-                icon="fas fa-envelope"
-              ></InputValidation>
-              <p style="margin-top: .75rem"></p>
+          <!-- EMAIL ADRESS -->
+          <InputValidation
+            vid="email"
+            name="Email"
+            rules="required|email"
+            type="email"
+            placeholder="Email address"
+            v-model="user_mail"
+            icon="fas fa-envelope"
+          ></InputValidation>
+          <p style="margin-top: .75rem"></p>
 
-              <!-- PASSWORD -->
-              <InputValidation
-                vid="password"
-                name="Password"
-                rules="required|min:6"
-                type="password"
-                placeholder="Create password"
-                v-model="user_password"
-                icon="fas fa-lock"
-                password-reveal
-              ></InputValidation>
-              <p style="margin-top: .75rem"></p>
+          <!-- PASSWORD -->
+          <InputValidation
+            vid="password"
+            name="Password"
+            rules="required|min:6"
+            type="password"
+            placeholder="Create password"
+            v-model="user_password"
+            icon="fas fa-lock"
+            password-reveal
+          ></InputValidation>
+          <p style="margin-top: .75rem"></p>
 
-              <!-- LOGIN BUTTON -->
-              <div class="field">
-                <b-button
-                  type="is-dark"
-                  @click="validate().then(valid ? signIn() : 0)"
-                  :loading="loading"
-                  expanded
-                >
-                  Sign In
-                </b-button>
-              </div>
+          <!-- LOGIN BUTTON -->
+          <div class="field">
+            <b-button
+              type="is-dark"
+              @click="validate().then(valid ? signIn() : 0)"
+              :loading="loading"
+              expanded
+            >
+              Sign In
+            </b-button>
+          </div>
 
-              <!-- --------------------------SEPARATOR-------------------------- -->
-              <div class="field has-text-centered">
-                <span style="color: #D6D6D6">———————— or ————————</span>
-              </div>
+          <!-- --------------------------SEPARATOR-------------------------- -->
+          <div class="field has-text-centered">
+            <span style="color: #D6D6D6">———————— or ————————</span>
+          </div>
 
-              <!-- GOOGLE -->
-              <div class="field">
-                <b-button
-                  @click="signInGoogle"
-                  icon-left="fab fa-google"
-                  icon-pack="fab"
-                  expanded
-                >
-                  Sign In using Google
-                </b-button>
-              </div>
+          <!-- GOOGLE -->
+          <div class="field">
+            <b-button
+              @click="signInGoogle"
+              icon-left="fab fa-google"
+              icon-pack="fab"
+              expanded
+            >
+              Sign In using Google
+            </b-button>
+          </div>
 
-              <!-- GITHUB -->
-              <div class="field">
-                <b-button
-                  @click="signInGithub"
-                  icon-left="fab fa-github"
-                  icon-pack="fab"
-                  expanded
-                >
-                  Sign In using GitHub
-                </b-button>
-              </div>
+          <!-- GITHUB -->
+          <div class="field">
+            <b-button
+              @click="signInGithub"
+              icon-left="fab fa-github"
+              icon-pack="fab"
+              expanded
+            >
+              Sign In using GitHub
+            </b-button>
+          </div>
 
-              <!-- --------------------------SEPARATOR-------------------------- -->
-              <div class="field has-text-centered">
-                <span style="color: #D6D6D6">———————— or ————————</span>
-              </div>
+          <!-- --------------------------SEPARATOR-------------------------- -->
+          <div class="field has-text-centered">
+            <span style="color: #D6D6D6">———————— or ————————</span>
+          </div>
 
-              <!-- CREATE ACCOUNT -->
-              <b-button
-                tag="router-link"
-                size="is-small"
-                to="/sign-up"
-                type="is-text"
-                expanded
-              >
-                Don't have an account? Sign Up!
-              </b-button>
+          <!-- CREATE ACCOUNT -->
+          <b-button
+            tag="router-link"
+            size="is-small"
+            to="/sign-up"
+            type="is-text"
+            expanded
+          >
+            Don't have an account? Sign Up!
+          </b-button>
 
-              <!-- FORGOT PASSWORD -->
-              <b-button
-                tag="router-link"
-                size="is-small"
-                to="/password-reset"
-                type="is-text"
-                expanded
-              >
-                Forgot your password?
-              </b-button>
-            </section>
-          </ValidationObserver>
+          <!-- FORGOT PASSWORD -->
+          <b-button
+            tag="router-link"
+            size="is-small"
+            to="/password-reset"
+            type="is-text"
+            expanded
+          >
+            Forgot your password?
+          </b-button>
+        </section>
+      </ValidationObserver>
 
-          <!-- 1/3 Horizontal center -->
-        </div>
-      </div>
+      <!-- 1/3 Horizontal center -->
     </div>
   </div>
 </template>
@@ -134,12 +127,14 @@ export default {
         email: this.user_mail,
         password: this.user_password
       };
+      this.$store.state.isAuth = true;
       this.$store
         .dispatch("signIn", user)
         .then(() => {
           this.$router.push("/user").catch(() => {});
         })
         .catch(error => {
+          this.$store.state.isAuth = false;
           this.$buefy.toast.open({
             message: error,
             duration: 5000,
@@ -149,12 +144,14 @@ export default {
         });
     },
     signInGoogle() {
+      this.$store.state.isAuth = true;
       this.$store
         .dispatch("signInGoogle")
         .then(() => {
           this.$router.push("/user");
         })
         .catch(error => {
+          this.$store.state.isAuth = false;
           this.$buefy.toast.open({
             message: error,
             duration: 5000,
@@ -164,12 +161,14 @@ export default {
         });
     },
     signInGithub() {
+      this.$store.state.isAuth = true;
       this.$store
         .dispatch("signInGithub")
         .then(() => {
           this.$router.push("/user");
         })
         .catch(error => {
+          this.$store.state.isAuth = false;
           this.$buefy.toast.open({
             message: error,
             duration: 5000,
