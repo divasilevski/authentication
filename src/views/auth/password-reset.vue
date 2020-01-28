@@ -57,6 +57,12 @@ export default {
         .dispatch("resetPassword", this.user_mail)
         .then(() => {
           this.$router.push("/sign-in").catch(() => {});
+          this.$buefy.toast.open({
+            message: "Check your email.",
+            duration: 5000,
+            position: "is-bottom",
+            type: "is-dark"
+          });
         })
         .catch(error => {
           this.$buefy.toast.open({
