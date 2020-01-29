@@ -65,7 +65,7 @@
 
           <!-- GITHUB -->
           <div class="field">
-            <div class="button is-fullwidth" @click="signInGoogle">
+            <div class="button is-fullwidth" @click="signInGithub">
               <span class="icon">
                 <font-awesome-icon :icon="['fab', 'github']" />
               </span>
