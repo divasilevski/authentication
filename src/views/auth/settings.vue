@@ -23,7 +23,7 @@
             type="text"
             placeholder="New username"
             v-model="new_username"
-            icon="fa fa-user"
+            icon="user"
           ></InputValidation>
           <p style="margin-top: .75rem"></p>
 
@@ -55,7 +55,7 @@
             type="password"
             placeholder="New password"
             v-model="new_password"
-            icon="fas fa-lock"
+            icon="lock"
             password-reveal
           ></InputValidation>
           <p style="margin-top: .75rem"></p>

@@ -13,7 +13,7 @@
       <p class="control has-icons-left">
         <b-input v-model="innerValue" v-bind="$attrs"></b-input>
         <span class="icon is-small is-left">
-          <i :class="icon"></i>
+          <font-awesome-icon :icon="['fas', icon]" />
         </span>
       </p>
     </b-field>

@@ -5,7 +5,7 @@
       <b-navbar-item @click="home">
         <div class="media">
           <span class="icon">
-            <i class="fas fa-home"></i>
+            <font-awesome-icon :icon="['fas', 'h-square']" />
           </span>
           <span>Home</span>
         </div>
@@ -30,7 +30,7 @@
         <a class="navbar-item">
           <div class="media">
             <span class="icon">
-              <i class="fas fa-user"></i>
+              <font-awesome-icon :icon="['fas', 'user']" />
             </span>
           </div>
         </a>

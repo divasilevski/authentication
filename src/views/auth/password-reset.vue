@@ -19,7 +19,7 @@
             type="email"
             placeholder="Email address"
             v-model="user_mail"
-            icon="fas fa-envelope"
+            icon="envelope"
           ></InputValidation>
           <p style="margin-top: .75rem"></p>
 

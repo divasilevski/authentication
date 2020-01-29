@@ -19,7 +19,7 @@
             type="text"
             placeholder="Username"
             v-model="user_name"
-            icon="fa fa-user"
+            icon="user"
           ></InputValidation>
           <p style="margin-top: .75rem"></p>
 
@@ -31,7 +31,7 @@
             type="email"
             placeholder="Email address"
             v-model="user_mail"
-            icon="fas fa-envelope"
+            icon="envelope"
           ></InputValidation>
           <p style="margin-top: .75rem"></p>
 
@@ -43,7 +43,7 @@
             type="password"
             placeholder="Create password"
             v-model="user_password"
-            icon="fas fa-lock"
+            icon="lock"
             password-reveal
           ></InputValidation>
           <p style="margin-top: .75rem"></p>
@@ -55,7 +55,7 @@
             rules="required|confirmed:password"
             type="password"
             placeholder="Confirm password"
-            icon="fa fa-key"
+            icon="key"
             password-reveal
           ></InputValidation>
           <p style="margin-top: .75rem"></p>

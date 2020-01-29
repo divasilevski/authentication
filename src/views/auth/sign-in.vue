@@ -19,7 +19,7 @@
             type="email"
             placeholder="Email address"
             v-model="user_mail"
-            icon="fas fa-envelope"
+            icon="envelope"
           ></InputValidation>
           <p style="margin-top: .75rem"></p>
 
@@ -31,7 +31,7 @@
             type="password"
             placeholder="Create password"
             v-model="user_password"
-            icon="fas fa-lock"
+            icon="lock"
             password-reveal
           ></InputValidation>
           <p style="margin-top: .75rem"></p>
@@ -55,26 +55,22 @@
 
           <!-- GOOGLE -->
           <div class="field">
-            <b-button
-              @click="signInGoogle"
-              icon-left="fab fa-google"
-              icon-pack="fab"
-              expanded
-            >
-              Sign In using Google
-            </b-button>
+            <div class="button is-fullwidth" @click="signInGoogle">
+              <span class="icon">
+                <font-awesome-icon :icon="['fab', 'google']" />
+              </span>
+              <span>Sign In using Google</span>
+            </div>
           </div>
 
           <!-- GITHUB -->
           <div class="field">
-            <b-button
-              @click="signInGithub"
-              icon-left="fab fa-github"
-              icon-pack="fab"
-              expanded
-            >
-              Sign In using GitHub
-            </b-button>
+            <div class="button is-fullwidth" @click="signInGoogle">
+              <span class="icon">
+                <font-awesome-icon :icon="['fab', 'github']" />
+              </span>
+              <span>Sign In using GitHub</span>
+            </div>
           </div>
 
           <!-- --------------------------SEPARATOR-------------------------- -->
