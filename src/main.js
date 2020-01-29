@@ -9,6 +9,17 @@ import Buefy from "buefy";
 import "buefy/dist/buefy.css";
 Vue.use(Buefy);
 
+// FORTAWESOME BLOCK
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+
+library.add(fas, fab);
+
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+Vue.component("font-awesome-icon", FontAwesomeIcon);
+
 // VALIDATION BLOCK
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 Vue.component("ValidationProvider", ValidationProvider);
