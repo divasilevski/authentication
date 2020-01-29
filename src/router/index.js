@@ -4,10 +4,10 @@ import firebase from "firebase/app";
 import store from "../store";
 
 // views
-import Home from "../views/home.vue";
+import Home from "../views/Home.vue";
 import Settings from "../views/auth/settings.vue";
 import PasswordReset from "../views/auth/password-reset.vue";
-import User from "../views/user.vue";
+import User from "../views/User.vue";
 import SignIn from "../views/auth/sign-in.vue";
 import SignUp from "../views/auth/sign-up.vue";
 
@@ -50,8 +50,6 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL,
   routes
 });
 
